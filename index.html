@@ -3,11 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/styles.css"/>
+        <link rel="stylesheet" href="css/mainstyle.css">
         <link rel="icon" href="pictures/htw-logo.png"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.9/dist/katex.css" integrity="sha384-ZwttU9uvhr+B2kIKyDo2dvxcvp8a60ptv4RgX4GOspQPcr+ynS9ov1x+hFAA7QSR" crossorigin="anonymous">
         <title>Lernen mit Ruben</title>
-        <script src="scripts/math_simple.js"></script>
     </head>
 
     <body>
@@ -16,58 +15,51 @@
             <img style="position: absolute; width: 120px; top: 0px; right: 0px;" src="pictures/htw-logo2.png">
         </div>
 
-        <div id="wrap">
-            <div id="header">
-                <h1>Lernprogramm von Ruben :)</h1>
-            </div>
-            <!-- Dropdown navigation -->
-            <div id="navigaton">
-                <ul class="topnav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Mathematik</a>
-                        <ul>
-                            <li><a href="#">Einfach</a></li>
-                            <li><a href="#">Mittel</a></li>
-                            <li><a href="#">Schwer</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Internet Technologien</a>
-                        <ul>
-                            <li><a href="#">HTML</a></li>
-                            <li><a href="#">CSS</a></li>
-                            <li><a href="#">JavaScript</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Programmiersprachen</a>
-                        <ul>
-                            <li><a href="#">C</a></li>
-                            <li><a href="#">Java</a></li>
-                            <li><a href="#">Python</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Allgemein</a>
-                        <ul>
-                            <li><a href="#">Einfach</a></li>
-                            <li><a href="#">Mittel</a></li>
-                            <li><a href="#">Schwer</a></li>
-                        </ul>
-                    </li>
 
-                </ul>
-            </div>
+        <header id="header">
+            <h1>Lernprogramm von Ruben :)</h1>
+        </header>
+        <!-- Dropdown navigation -->
+        <nav id="navigaton">
+            <ul class="topnav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Mathematik</a>
+                    <ul>
+                        <li><a href="math/math_simple.html">Einfach</a></li>
+                        <li><a href="#">Mittel</a></li>
+                        <li><a href="#">Schwer</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Internet Technologien</a>
+                    <ul>
+                        <li><a href="#">HTML</a></li>
+                        <li><a href="#">CSS</a></li>
+                        <li><a href="#">JavaScript</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Programmiersprachen</a>
+                    <ul>
+                        <li><a href="#">C</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">Python</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Allgemein</a>
+                    <ul>
+                        <li><a href="#">Einfach</a></li>
+                        <li><a href="#">Mittel</a></li>
+                        <li><a href="#">Schwer</a></li>
+                    </ul>
+                </li>
 
-            <div id="content">
-                <article>
-                    <h2>Willkommen, lass uns loslexgen!</h2>
-                </article>
-                <article>
-                    <h3>Aufgabe:</h3>
-                    <div id="task-container">
-                        <div id="tasks"></div>
-                        <script src="scripts/math_simple.js"></script>
-                    </div>
-                </article>
-            </div>
-        </div>
+            </ul>
+        </nav>
+
+        <main id="content">
+            <article>
+                <h1>Willkommen</h1>
+                <p>Heute machen wir ein paar Aufgaben</p>
+            </article>
+        </main>
     </body>
 </html>
