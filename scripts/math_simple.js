@@ -1,100 +1,71 @@
 "use strict";
-(function() {
 
-    function generateQuiz() {
-        const out = [];
-        //for every question create a radio button for every answer
-        questionsMathSimple.forEach(
-            (currentQuestion, questionNumber) => {
-                //list of all possible answers
-                const answers = [];
-                //add button for every answer ( Create html with template literals)
-                for(letter in currentQuestion.answers){
-                    answers.push(
-                        `<label><input type="button" name="question${questionNumber}" value="${letter}">
-                        ${letter} : ${currentQuestion.answers[letter]}</label>`
-                    );
-                }
-                //add the question and answers to output
-                out.push(
-                    `<div class="task">
-                    <div class="question"> ${currentQuestion.question}</div>
-                    <div class="answers"> ${answers.join("")}</div>
-                </div>`
-                );
-            }
-        );
+//variables
+//model, view, presenter
+let model;
+let view;
+let presenter;
 
-        //push the output list into the html element
-        taskContainer.innerHTML = out.join('');
+//load when document is loaded
+document.addEventListener('DOMContentLoaded', function (){
+   //initialize the variables
+    model = new Model();
+    presenter = new Presenter();
+    view = new View(presenter);
+    presenter.setModelAndView(model,view);
+    //setTimeout(presenter, 3000);
+    presenter.startPresenter();
+});
+
+// ##### Model #####
+class Model {
+    getTask() {
+        return "Hallo";
+    }
+}
+// ##### #####
+
+// ##### Presenter #####
+class Presenter {
+    setModelAndView(model, view){
+        this.model = model;
+        this.view = view;
     }
 
-    function showResult(){
-        //get the answer containers
-        const answerContainer = taskContainer.querySelectorAll('.answers');
+    startPresenter(){
+        //Begin application
+        let question = document.getElementById('question');
+        question.innerHTML= 'Aufgabe: ' + model.getTask();
+    }
 
-        //count the correct answers
-        let correctAnswers = 0;
+    evaluate(answer){
+        console.log('Presenter -> Antwort: ' + answer);
+    }
+}
+// ##### #####
 
-        //for each question get wether its correct
+// ##### View #####
+class View {
+    constructor(presenter) {
+        this.presenter = presenter;
+        this.setHandler();
+    }
+
+    setHandler() {
+        // use capture false -> use bubbling
+        // bind this -> this is refering to object rather than event
+        document.getElementById('options').addEventListener('click', this.checkAnswer.bind(this), false);
+        document.querySelectorAll('#options > *')[0].textContent = 'Opt 1';
+        document.querySelectorAll('#options > *')[1].textContent = 'Opt 2';
+        document.querySelectorAll('#options > *')[2].textContent = 'Opt 3';
+        document.querySelectorAll('#options > *')[3].textContent = 'Opt 4';
 
     }
 
-    //Variables
-    const taskContainer = document.getElementById('task')
-    const questionsMathSimple = [
-        {
-            question: '1 + 1 =...',
-            answers: {
-                a: '3',
-                b: '5',
-                c: '129',
-                d: '2'
-            },
-            correctAnswer: 'd'
-        },
-        {
-            question: '2 * 3 =...',
-            answers: {
-                a: '5',
-                b: '6',
-                c: '9',
-                d: '3'
-            },
-            correctAnswer: 'b'
-        },
-        {
-            question: '11 + 10 =...',
-            answers: {
-                a: '120',
-                b: '4',
-                c: '21',
-                d: '2'
-            },
-            correctAnswer: 'c'
-        },
-        {
-            question: '4 * 5 =...',
-            answers: {
-                a: '20',
-                b: '0',
-                c: '12123',
-                d: '90'
-            },
-            correctAnswer: 'a'
-        },
-        {
-            question: '90 + 1000=...',
-            answers: {
-                a: '9120',
-                b: '1923',
-                c: '1100',
-                d: '1090'
-            },
-            correctAnswer: 'd'
-        }
-    ];
-
-    generateQuiz();
-
-})();
+    checkAnswer(event) {
+        //Debugging
+        console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
+        this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value));
+    }
+}
+// ##### #####
