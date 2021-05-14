@@ -10,7 +10,7 @@ let questionIndex = 0;
 
 const questionsMathSimple = [
     {
-        question: '1 + 1 =...',
+        question: '1 + 1 = ...',
         answers: {
             a: '3',
             b: '5',
@@ -20,7 +20,7 @@ const questionsMathSimple = [
         correctAnswer: 'd'
     },
     {
-        question: '2 * 3 =...',
+        question: '2 * 3 = ...',
         answers: {
             a: '5',
             b: '6',
@@ -30,7 +30,7 @@ const questionsMathSimple = [
         correctAnswer: 'b'
     },
     {
-        question: '11 + 10 =...',
+        question: '11 + 10 = ...',
         answers: {
             a: '120',
             b: '4',
@@ -40,7 +40,7 @@ const questionsMathSimple = [
         correctAnswer: 'c'
     },
     {
-        question: '4 * 5 =...',
+        question: '4 * 5 = ...',
         answers: {
             a: '20',
             b: '0',
@@ -50,7 +50,7 @@ const questionsMathSimple = [
         correctAnswer: 'a'
     },
     {
-        question: '90 + 1000=...',
+        question: '90 + 1000= ...',
         answers: {
             a: '9120',
             b: '1923',
