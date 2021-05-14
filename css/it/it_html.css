@@ -1,6 +1,13 @@
 body {
     background-color: ghostwhite;
 }
+main {
+    width: 75%;
+}
+
+button {
+    width: max-content;
+}
 
 #navigaton {
     width: 75%;
@@ -10,20 +17,22 @@ body {
 }
 
 #options {
-   padding-top: 10px;
+    padding-top: 15px;
+    font-family: sans-serif;
+}
+
+#options > * {
+    font-size: 16px;
 }
 
 #result {
     padding: 20px;
+    font-family: sans-serif;
 }
 
-main {
-    width: 75%;
-}
-
-button {
-    width: 50px;
-    height: 50px;
+#question {
+    font-family: sans-serif;
+    font-size: 19px;
 }
 
 #task-container {
