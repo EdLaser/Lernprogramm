@@ -1,65 +1,44 @@
 <!DOCTYPE html>
-<html lang="de">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/index.css">
-        <link rel="icon" href="pictures/htw-logo.png"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.9/dist/katex.css" integrity="sha384-ZwttU9uvhr+B2kIKyDo2dvxcvp8a60ptv4RgX4GOspQPcr+ynS9ov1x+hFAA7QSR" crossorigin="anonymous">
-        <title>Lernen mit Ruben</title>
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.9/dist/katex.css" integrity="sha384-ZwttU9uvhr+B2kIKyDo2dvxcvp8a60ptv4RgX4GOspQPcr+ynS9ov1x+hFAA7QSR" crossorigin="anonymous">
+    <title>Lernen mit Ruben</title>
+</head>
+<body>
+    <header id="top_name">
+        <p>Lernprogramm</p>
+    </header>
+<main>
+    <nav>
+        <form>
+            <input type="button" id="mathe" value="Mathe">
+            <input type="button" id="it" value="Internettechnologien">
+        </form>
+    </nav>
 
-    <body>
+    <aside id="side_panel">
+        <p>Heute lernen wir etwas :)</p>
+    </aside>
 
-        <div class="top-banner" style="position: relative;">
-            <img style="position: absolute; width: 120px; top: 0px; right: 0px;" src="pictures/htw-logo2.png">
+    <article id="main_content">
+        <div id="task-container">
+            <div id="question">Aufgabe:</div>
+            <div id="options">
+                <button id="a"></button>
+                <button id="b"></button>
+                <button id="c"></button>
+                <button id="d"></button>
+            </div>
+            <div id="result"></div>
         </div>
+    </article>
+</main>
 
-
-        <header id="header">
-            <h1>Lernprogramm von Ruben :)</h1>
-        </header>
-        <!-- Dropdown navigation -->
-        <nav id="navigaton">
-            <ul class="topnav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Mathematik</a>
-                    <ul>
-                        <li><a href="html/math/math_simple.html">Einfach</a></li>
-                        <li><a href="#">Mittel</a></li>
-                        <li><a href="#">Schwer</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Internet Technologien</a>
-                    <ul>
-                        <li><a href="html/it/it_html.html">HTML</a></li>
-                        <li><a href="#">CSS</a></li>
-                        <li><a href="#">JavaScript</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Programmiersprachen</a>
-                    <ul>
-                        <li><a href="#">C</a></li>
-                        <li><a href="#">Java</a></li>
-                        <li><a href="#">Python</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Allgemein</a>
-                    <ul>
-                        <li><a href="/html/universall/universall_simple.html">Einfach</a></li>
-                        <li><a href="#">Mittel</a></li>
-                        <li><a href="#">Schwer</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
-
-        <main id="content">
-            <article>
-                <h1>Willkommen</h1>
-                <p>Heute machen wir ein paar Aufgaben</p>
-            </article>
-        </main>
-    </body>
+<footer>
+    <p>Ruben-David Kraus</p>
+</footer>
+</body>
 </html>
