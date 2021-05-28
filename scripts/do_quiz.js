@@ -13,7 +13,7 @@ let internetButton = document.getElementById('it');
 
 //load when document is loaded
 document.addEventListener('DOMContentLoaded', function (){
-   //initialize the variables
+    //initialize the variables
     model = new Model();
     presenter = new Presenter();
     view = new View(presenter);
@@ -152,6 +152,59 @@ const questionsMathSimple = [
             b: '1923',
             c: '1100',
             d: '1090'
+        },
+        correctAnswer: 'd'
+    }
+];
+
+const questionsIT = [
+    {
+        question: 'Welches ist kein Block-Level-Element ?',
+        answers: {
+            a: 'DIV',
+            b: 'H1-H6',
+            c: 'P',
+            d: 'SPAN'
+        },
+        correctAnswer: 'd'
+    },
+    {
+        question: 'Welches Agrument muss ein img immer haben ?',
+        answers: {
+            a: 'class',
+            b: 'src',
+            c: 'style',
+            d: 'alt'
+        },
+        correctAnswer: 'b'
+    },
+    {
+        question: 'Was ist kein Type-Wert im Element form ?',
+        answers: {
+            a: 'submit',
+            b: 'passwort',
+            c: 'check',
+            d: 'checkbox'
+        },
+        correctAnswer: 'c'
+    },
+    {
+        question: 'Mit welcher Zeile beginnt jede Webseite ?',
+        answers: {
+            a: '<!DOCYTPE html>',
+            b: '<head>',
+            c: '<title>',
+            d: '<html xmlns>'
+        },
+        correctAnswer: 'a'
+    },
+    {
+        question: 'Welches Element gehört nicht zur Textstrukturierung ?',
+        answers: {
+            a: 'ul',
+            b: 'p',
+            c: 'hr',
+            d: 'aside'
         },
         correctAnswer: 'd'
     }
