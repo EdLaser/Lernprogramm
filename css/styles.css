@@ -4,6 +4,10 @@ body {
     background-size: cover;
 }
 
+html, body {
+    height: 98%;
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -12,6 +16,19 @@ main {
 article {
     flex: 3 3 0%;
     order: 2;
+}
+nav {
+    flex: 0 0 0%;
+    order: 1;
+}
+
+#side_panel {
+    flex: 1 1 0%;
+    order: 3;
+}
+
+#heading {
+    font-size: 1em;
 }
 
 article, nav, aside, footer, header {
@@ -24,17 +41,12 @@ article, nav, aside, footer, header {
     border-radius: 5px;
 }
 
-nav {
-    flex: 0 0 0%;
-    order: 1;
-}
-
 .button {
     display: inline-block;
     border-radius: 10px;
     padding: 20px 30px;
     width: auto;
-    font-size: 2vw;
+    font-size: 1vw;
     margin: 10px auto;
     vertical-align:bottom;
     white-space: nowrap;
@@ -43,23 +55,42 @@ nav {
     justify-content: center;
 }
 
-#main_content {
+#a, #b, #c, #d {
+    font-size: 2em;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#result {
+    font-size: 1.5em;
+}
+
+#options {
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.middle {
+    height: 100%;
+}
+
+#middle_page {
     background-color: grey;
 }
 
-#task-container >* {
+#task-container > * {
     height: auto;
 }
 
 #question {
     font-size:2em;
+    text-align: center;
 }
 
 #mathe, #it {
     position: relative;
-    height: auto;
-    width: auto;
-    font-size: 1.5em;
+    font-size: 1em;
     width: 7em;
     height: 2em;
     padding: 5px 1.5em;
@@ -67,15 +98,10 @@ nav {
 }
 
 #top_name {
-    text-align: -webkit-center;
+    text-align: center;
     display: block;
     padding: 5px;
-
-}
-
-#side_panel{
-    flex: 1 1 0%;
-    order: 3;
+    font-size: 2em;
 }
 
 footer {

@@ -1,18 +1,19 @@
 "use strict";
-
 //variables
 //model, view, presenter
 let model;
 let view;
 let presenter;
 let correctAnswers = 0;
-let questionIndex = 0;
+let questionIndex;
 
-let mathButton = document.getElementById('mathe');
-let internetButton = document.getElementById('it');
+const mathButton = document.getElementById('mathe');
+const internetButton = document.getElementById('it');
+const header = document.getElementById('top_text');
+const allButtons = document.querySelectorAll('#options > *')
 
 //load when document is loaded
-document.addEventListener('DOMContentLoaded', function (){
+/*document.addEventListener('DOMContentLoaded', function (){
     //initialize the variables
     model = new Model();
     presenter = new Presenter();
@@ -20,16 +21,52 @@ document.addEventListener('DOMContentLoaded', function (){
     presenter.setModelAndView(model,view);
     //setTimeout(presenter, 3000);
     presenter.displayQuestion();
+}); */
+
+mathButton.addEventListener('click', function (){
+    questionIndex=0;
+    // set = questionsMathSimple;
+    model = new Model(questionsMathSimple);
+    presenter = new Presenter();
+    view = new View(presenter)
+    presenter.setModelAndView(model, view);
+    presenter.displayQuestion();
+    view.setHeader('Mathe');
+});
+
+internetButton.addEventListener('click', function (){
+    questionIndex=0;
+    // set = questionsIT
+    model = new Model(questionsIT);
+    presenter = new Presenter();
+    view = new View(presenter)
+    presenter.setModelAndView(model, view);
+    presenter.displayQuestion();
+    view.setHeader('Internet Technologien');
 });
 
 // ##### Model #####
 class Model {
+    constructor(set) {
+        this.questions = set;
+    }
     getTask(i) {
-        return questionsMathSimple[i].question;
+        if (this.questions === questionsMathSimple)
+            return katex.renderToString(this.questions[i].question);
+        else
+            return this.questions[i].question;
     }
 
     getAnswer(i) {
-        return questionsMathSimple[i].correctAnswer;
+        return this.questions[i].correctAnswer;
+    }
+
+    getOptions(i) {
+        return this.questions[i].answers;
+    }
+
+    getLength(){
+        return this.questions.length;
     }
 }
 // ##### #####
@@ -57,6 +94,14 @@ class Presenter {
             console.log(answer + ' was not correct');
         }
     }
+
+    displayButtons(i) {
+      return model.getOptions(i);
+    }
+
+    presentLength(){
+        return model.getLength();
+    }
 }
 // ##### #####
 
@@ -71,38 +116,72 @@ class View {
     setHandler() {
         // use capture false -> use bubbling
         // bind this -> this is refering to object rather than event
-        document.getElementById('options').addEventListener('click', this.checkAnswer.bind(this), false);
-        document.getElementById('options').addEventListener('click', this.nextQuestion.bind(this), false);
+        // allButtons[0].addEventListener('click', this.nextQuestion.bind(this), false);
+        allButtons[0].addEventListener('click', this.checkAnswer.bind(this), false);
+
+        // allButtons[1].addEventListener('click', this.nextQuestion.bind(this), false);
+        allButtons[1].addEventListener('click', this.checkAnswer.bind(this), false);
+
+        // allButtons[2].addEventListener('click', this.nextQuestion.bind(this), false);
+        allButtons[2].addEventListener('click', this.checkAnswer.bind(this), false);
+
+        // allButtons[3].addEventListener('click', this.nextQuestion.bind(this), false);
+        allButtons[3].addEventListener('click', this.checkAnswer.bind(this), false);
+
     }
 
     setButtons(i) {
-        document.querySelectorAll('#options > *')[0].textContent = questionsMathSimple[i].answers.a;
-        document.querySelectorAll('#options > *')[1].textContent = questionsMathSimple[i].answers.b;
-        document.querySelectorAll('#options > *')[2].textContent = questionsMathSimple[i].answers.c;
-        document.querySelectorAll('#options > *')[3].textContent = questionsMathSimple[i].answers.d;
+        allButtons[0].textContent = this.presenter.displayButtons(i).a;
+        allButtons[1].textContent = this.presenter.displayButtons(i).b;
+        allButtons[2].textContent = this.presenter.displayButtons(i).c;
+        allButtons[3].textContent = this.presenter.displayButtons(i).d;
     }
 
-    showResult(){
-
+    displayCorrectAnswers(){
+        document.getElementById('side_math').textContent = 'Correct answers: ' + correctAnswers;
     }
 
-    nextQuestion() {
-        if(questionIndex === 5) {
-            document.querySelector('#result').textContent = 'Correct answers: ' + correctAnswers + '/5';
+    /* nextQuestion() {
+        if(questionIndex <= 5) {
+            console.log("Question " + questionIndex + " has been answered.");
+            this.presenter.displayQuestion();
+            this.displayCorrectAnswers();
         }
-        console.log("Question " + questionIndex + " has been answered.");
-        this.presenter.displayQuestion();
-    }
+        if(questionIndex > 5) {
+            this.endReached();
+            this.displayCorrectAnswers();
+            questionIndex = 0;
+            return;
+        }
+    } */
 
     checkAnswer(event) {
         //Debugging
-        console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
-        this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value), questionIndex);
-        questionIndex +=1;
-        console.log(questionIndex);
+        if(questionIndex < this.presenter.presentLength()) {
+            console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
+            console.log("Question " + questionIndex + " has been answered.");
+            this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value), questionIndex);
+
+            questionIndex += 1;
+            this.presenter.displayQuestion();
+            this.displayCorrectAnswers();
+        }
+        if(questionIndex === 5) {
+            questionIndex = 0;
+            this.endReached();
+            this.displayCorrectAnswers();
+        }
+    }
+
+    setHeader(text) {
+        header.textContent=text;
+    }
+
+    endReached() {
+        document.querySelector('#task-container').textContent = 'Alle Fragen beantwortet, sehr gut !';
     }
 }
-// ##### #####
+// ###### #####
 
 const questionsMathSimple = [
     {
@@ -126,32 +205,32 @@ const questionsMathSimple = [
         correctAnswer: 'b'
     },
     {
-        question: '11 + 10 = ...',
+        question: 'x^2 * x^3 = ...',
         answers: {
-            a: '120',
-            b: '4',
-            c: '21',
-            d: '2'
+            a: 'x^2',
+            b: '2x',
+            c: 'x^5',
+            d: 'x'
         },
         correctAnswer: 'c'
     },
     {
-        question: '4 * 5 = ...',
+        question: '\\sqrt{x} = 3',
         answers: {
-            a: '20',
-            b: '0',
-            c: '12123',
-            d: '90'
+            a: 'x=9',
+            b: 'x=15',
+            c: 'x=3',
+            d: 'x=12'
         },
         correctAnswer: 'a'
     },
     {
-        question: '90 + 1000= ...',
+        question: '\\cfrac{x}{1 + \\cfrac{4}{8}} = 12',
         answers: {
-            a: '9120',
-            b: '1923',
-            c: '1100',
-            d: '1090'
+            a: '27',
+            b: '10',
+            c: '3',
+            d: '18'
         },
         correctAnswer: 'd'
     }
@@ -169,7 +248,7 @@ const questionsIT = [
         correctAnswer: 'd'
     },
     {
-        question: 'Welches Agrument muss ein img immer haben ?',
+        question: 'Welches Argument muss ein img immer haben ?',
         answers: {
             a: 'class',
             b: 'src',

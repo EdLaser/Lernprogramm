@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main_style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.9/dist/katex.css" integrity="sha384-ZwttU9uvhr+B2kIKyDo2dvxcvp8a60ptv4RgX4GOspQPcr+ynS9ov1x+hFAA7QSR" crossorigin="anonymous">
-    <script src="scripts/do_quiz.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.css" integrity="sha384-knaESGLxlQRSHWSJ+ZbTX6/L1bJZWBsBYGb2O+g64XHFuO7CbIj9Pkf1aaVXzIZJ" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.js" integrity="sha384-7u+OeKP8De/qfWU/3s5KUDC2wvwPe+d5GwojxjiwFJJpHAp38wQFtz3tr2QNGidv" crossorigin="anonymous"></script>
     <title>Lernen mit Ruben</title>
 </head>
 <body>
-    <header id="top_name">
-        <p>Lernprogramm</p>
+    <header id="top_name" style="font-family: cursive;">
+        <p id="top_text">Lernprogramm</p>
     </header>
-<main>
+<main class="middle" id="main_content">
     <nav>
         <form>
             <input type="button" id="mathe" value="Mathe">
-            <input type="button" id="it" value="Internettechnologien">
+            <input type="button" id="it" value="Internet Tech.">
         </form>
     </nav>
 
     <aside id="side_panel">
-        <p>Heute lernen wir etwas :)</p>
+        <p id="side_para" style="font-family: cursive;">Heute lernen wir etwas :)</p>
+        <p id="side_math" style="font-family: cursive;"></p>
+        <p id="side_it" style="font-family: cursive;"></p>
     </aside>
 
-    <article id="main_content">
+    <article id="middle_page">
         <div id="task-container">
-            <div id="question">Aufgabe:</div>
+            <div id="question" style="font-family: cursive;">Lass uns loslegen!</div>
             <div id="options">
                 <button id="a"></button>
                 <button id="b"></button>
@@ -35,11 +37,12 @@
             </div>
             <div id="result"></div>
         </div>
+        <script src="scripts/do_quiz.js"></script>
     </article>
 </main>
 
 <footer>
-    <p>Ruben-David Kraus</p>
+    <p id="foot" style="font-family: cursive;text-align: center">Ruben-David Kraus</p>
 </footer>
 </body>
 </html>
