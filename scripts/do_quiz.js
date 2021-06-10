@@ -24,45 +24,62 @@ const allButtons = document.querySelectorAll('#options > *')
 }); */
 
 mathButton.addEventListener('click', function (){
-    questionIndex=0;
     // set = questionsMathSimple;
-    model = new Model(questionsMathSimple);
+    model = new Model(questionsMathSimple,0 ,0);
     presenter = new Presenter();
     view = new View(presenter)
     presenter.setModelAndView(model, view);
-    presenter.displayQuestion();
+    presenter.start();
     view.setHeader('Mathe');
 });
 
 internetButton.addEventListener('click', function (){
-    questionIndex=0;
     // set = questionsIT
-    model = new Model(questionsIT);
+    model = new Model(questionsIT, 0, 0);
     presenter = new Presenter();
     view = new View(presenter)
     presenter.setModelAndView(model, view);
-    presenter.displayQuestion();
+    presenter.start();
     view.setHeader('Internet Technologien');
 });
 
 // ##### Model #####
 class Model {
-    constructor(set) {
+    constructor(set, index, correct) {
         this.questions = set;
+        this.index = index;
+        this.correctAnswers = correct;
     }
-    getTask(i) {
+
+    incrementCorrect() {
+        this.correctAnswers +=1;
+    }
+
+    getCorrect() {
+        return this.correctAnswers;
+    }
+
+    getTask() {
         if (this.questions === questionsMathSimple)
-            return katex.renderToString(this.questions[i].question);
+            return katex.renderToString(this.questions[this.index].question);
         else
-            return this.questions[i].question;
+            return this.questions[this.index].question;
     }
 
-    getAnswer(i) {
-        return this.questions[i].correctAnswer;
+    getAnswer() {
+        return this.questions[this.index].correctAnswer;
     }
 
-    getOptions(i) {
-        return this.questions[i].answers;
+    getOptions() {
+        return this.questions[this.index].answers;
+    }
+
+    incrementIndex() {
+        this.index +=1;
+    }
+
+    getIndex() {
+        return this.index;
     }
 
     getLength(){
@@ -78,29 +95,37 @@ class Presenter {
         this.view = view;
     }
 
-    displayQuestion(){
+    start(){
         //Begin application
-        let question = document.getElementById('question');
-        question.innerHTML= 'Aufgabe: ' + model.getTask(questionIndex);
-        view.setButtons(questionIndex);
+        console.log("Starting...");
+        this.displayQuestion(0);
     }
 
-    evaluate(answer, i){
-        console.log('Presenter -> Answer: ' + answer);
-        if (answer === model.getAnswer(i)) {
-            correctAnswers += 1;
-            console.log(answer + ' was correct!');
-        } else {
-            console.log(answer + ' was not correct');
+    displayQuestion(i){
+        let question = document.getElementById('question');
+        question.innerHTML= 'Aufgabe: ' + model.getTask(i);
+        view.setButtons(i);
+    }
+
+    evaluate(answer){
+        console.log("Question " + this.model.getIndex() + " has been answered.");
+        console.log("Array Length: " + this.model.getLength());
+
+        if(this.model.getIndex() < this.model.getLength()) {
+            console.log('Presenter -> Answer: ' + answer);
+            if (answer === this.model.getAnswer(this.model.getIndex())) {
+                this.model.incrementCorrect();
+                console.log(answer + ' was correct!');
+            } else {
+                console.log(answer + ' was not correct');
+            }
+            return this.model.getAnswer();
+            this.model.incrementIndex();
         }
     }
 
     displayButtons(i) {
       return model.getOptions(i);
-    }
-
-    presentLength(){
-        return model.getLength();
     }
 }
 // ##### #####
@@ -138,7 +163,7 @@ class View {
     }
 
     displayCorrectAnswers(){
-        document.getElementById('side_math').textContent = 'Correct answers: ' + correctAnswers;
+        document.getElementById('side_math').textContent = 'Correct answers: ' + this.presenter.getCorrect();
     }
 
     /* nextQuestion() {
@@ -157,20 +182,10 @@ class View {
 
     checkAnswer(event) {
         //Debugging
-        if(questionIndex < this.presenter.presentLength()) {
-            console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
-            console.log("Question " + questionIndex + " has been answered.");
-            this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value), questionIndex);
-
-            questionIndex += 1;
-            this.presenter.displayQuestion();
-            this.displayCorrectAnswers();
-        }
-        if(questionIndex === 5) {
-            questionIndex = 0;
-            this.endReached();
-            this.displayCorrectAnswers();
-        }
+        console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
+        this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value));
+        this.presenter.displayQuestion();
+        this.displayCorrectAnswers();
     }
 
     setHeader(text) {
