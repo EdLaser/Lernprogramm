@@ -7,8 +7,13 @@ let presenter;
 let correctAnswers = 0;
 let questionIndex;
 
+const side_it = document.getElementById('side_it');
+const side_math = document.getElementById('side_math');
+const side_uni = document.getElementById('side_uni');
+
 const mathButton = document.getElementById('mathe');
 const internetButton = document.getElementById('it');
+const uniButton = document.getElementById('uni');
 const header = document.getElementById('top_text');
 const allButtons = document.querySelectorAll('#options > *')
 
@@ -24,8 +29,8 @@ const allButtons = document.querySelectorAll('#options > *')
 }); */
 
 mathButton.addEventListener('click', function (){
-    // set = questionsMathSimple;
-    model = new Model(questionsMathSimple,0 ,0);
+    // set = questionsMath;
+    model = new Model(questionsMath,0 ,0);
     presenter = new Presenter();
     view = new View(presenter)
     presenter.setModelAndView(model, view);
@@ -41,6 +46,16 @@ internetButton.addEventListener('click', function (){
     presenter.setModelAndView(model, view);
     presenter.start();
     view.setHeader('Internet Technologien');
+});
+
+uniButton.addEventListener('click', function (){
+    // set = questionsMath;
+    model = new Model(questionsUni,0 ,0);
+    presenter = new Presenter();
+    view = new View(presenter)
+    presenter.setModelAndView(model, view);
+    presenter.start();
+    view.setHeader('Allgemeinwissen');
 });
 
 // ##### Model #####
@@ -60,7 +75,7 @@ class Model {
     }
 
     getTask() {
-        if (this.questions === questionsMathSimple)
+        if (this.questions === questionsMath)
             return katex.renderToString(this.questions[this.index].question);
         else
             return this.questions[this.index].question;
@@ -101,10 +116,22 @@ class Presenter {
         this.displayQuestion(0);
     }
 
-    displayQuestion(i){
+    displayQuestion(){
         let question = document.getElementById('question');
-        question.innerHTML= 'Aufgabe: ' + model.getTask(i);
-        view.setButtons(i);
+        question.innerHTML= 'Aufgabe: ' + model.getTask();
+        this.view.setButtons();
+    }
+
+    setCorrectAnswers() {
+        if (this.model.questions === questionsIT) {
+            this.view.displayCorrectAnswers(side_it,"IT: " + this.model.getCorrect()+"/5")
+        }
+        if (this.model.questions === questionsUni) {
+            this.view.displayCorrectAnswers(side_uni, "Allgemein: " + this.model.getCorrect()+"/5")
+        }
+        if (this.model.questions === questionsMath) {
+            this.view.displayCorrectAnswers(side_math, "Mathe: " + this.model.getCorrect()+"/5")
+        }
     }
 
     evaluate(answer){
@@ -119,13 +146,21 @@ class Presenter {
             } else {
                 console.log(answer + ' was not correct');
             }
-            return this.model.getAnswer();
+
+            this.setCorrectAnswers();
+
+            if (this.model.getIndex() === 4) {
+                this.view.endReached();
+                return;
+            }
             this.model.incrementIndex();
+
+            this.displayQuestion();
         }
     }
 
-    displayButtons(i) {
-      return model.getOptions(i);
+    displayButtons() {
+      return model.getOptions();
     }
 }
 // ##### #####
@@ -155,15 +190,15 @@ class View {
 
     }
 
-    setButtons(i) {
-        allButtons[0].textContent = this.presenter.displayButtons(i).a;
-        allButtons[1].textContent = this.presenter.displayButtons(i).b;
-        allButtons[2].textContent = this.presenter.displayButtons(i).c;
-        allButtons[3].textContent = this.presenter.displayButtons(i).d;
+    setButtons() {
+        allButtons[0].textContent = this.presenter.displayButtons().a;
+        allButtons[1].textContent = this.presenter.displayButtons().b;
+        allButtons[2].textContent = this.presenter.displayButtons().c;
+        allButtons[3].textContent = this.presenter.displayButtons().d;
     }
 
-    displayCorrectAnswers(){
-        document.getElementById('side_math').textContent = 'Correct answers: ' + this.presenter.getCorrect();
+    displayCorrectAnswers(element, text) {
+        element.textContent = text;
     }
 
     /* nextQuestion() {
@@ -184,8 +219,6 @@ class View {
         //Debugging
         console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
         this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value));
-        this.presenter.displayQuestion();
-        this.displayCorrectAnswers();
     }
 
     setHeader(text) {
@@ -193,12 +226,14 @@ class View {
     }
 
     endReached() {
-        document.querySelector('#task-container').textContent = 'Alle Fragen beantwortet, sehr gut !';
+        let task_container = document.getElementById('task-container');
+        task_container.style.fontSize = "medium";
+        task_container.textContent = 'Alle Fragen beantwortet, sehr gut !';
     }
 }
 // ###### #####
 
-const questionsMathSimple = [
+const questionsMath = [
     {
         question: '1 + 1 = ...',
         answers: {
@@ -299,6 +334,59 @@ const questionsIT = [
             b: 'p',
             c: 'hr',
             d: 'aside'
+        },
+        correctAnswer: 'd'
+    }
+];
+
+const questionsUni = [
+    {
+        question: 'Wo ist der Lemur heimisch ?',
+        answers: {
+            a: 'HTW-Dresden',
+            b: 'Mexiko',
+            c: 'Polen',
+            d: 'Madagaskar'
+        },
+        correctAnswer: 'd'
+    },
+    {
+        question: 'Wie viel % der Erde sind von Wasser bedeckt ?',
+        answers: {
+            a: '60 %',
+            b: '70 %',
+            c: '80 %',
+            d: '85 %'
+        },
+        correctAnswer: 'b'
+    },
+    {
+        question: 'Wie oft kann ein Blatt Papier gefaltet werden ?',
+        answers: {
+            a: '7-mal',
+            b: '12-mal',
+            c: '9-mal',
+            d: '15-mal'
+        },
+        correctAnswer: 'c'
+    },
+    {
+        question: 'Wie tief ist der Marianengraben ?',
+        answers: {
+            a: '11000m',
+            b: '9000m',
+            c: '7000m',
+            d: '8500m'
+        },
+        correctAnswer: 'a'
+    },
+    {
+        question: 'Wie bestehe ich am besten eine Klausur ?',
+        answers: {
+            a: 'Spicken',
+            b: 'Beten',
+            c: 'Nicht erscheinen',
+            d: 'Lernen'
         },
         correctAnswer: 'd'
     }
