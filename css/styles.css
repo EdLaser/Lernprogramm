@@ -37,7 +37,7 @@ article, nav, aside, footer, header {
     background-color: lightgrey;
     margin: 2px;
     padding: 1em;
-    border: 2px inset darkgrey;
+    border: 2px solid black;
     border-radius: 5px;
 }
 
