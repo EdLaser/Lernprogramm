@@ -4,9 +4,6 @@
 let model;
 let view;
 let presenter;
-let correctAnswers = 0;
-let questionIndex;
-
 const side_it = document.getElementById('side_it');
 const side_math = document.getElementById('side_math');
 const side_uni = document.getElementById('side_uni');
@@ -15,7 +12,8 @@ const mathButton = document.getElementById('mathe');
 const internetButton = document.getElementById('it');
 const uniButton = document.getElementById('uni');
 const header = document.getElementById('top_text');
-const allButtons = document.querySelectorAll('#options > *')
+const allButtons = document.querySelectorAll('#options > *');
+const options = document.getElementById('options');
 
 //load when document is loaded
 /*document.addEventListener('DOMContentLoaded', function (){
@@ -81,8 +79,20 @@ class Model {
             return this.questions[this.index].question;
     }
 
+    getTaskAll(i) {
+        if (this.questions === questionsMath)
+            return katex.renderToString(this.questions[i].question);
+        else
+            return this.questions[i].question;
+    }
+
     getAnswer() {
         return this.questions[this.index].correctAnswer;
+    }
+
+    getAnswerAll(i) {
+        let corr = this.questions[i].correctAnswer;
+        return this.questions[i].answers[corr];
     }
 
     getOptions() {
@@ -112,14 +122,16 @@ class Presenter {
 
     start(){
         //Begin application
+        options.style.display='flex';
         console.log("Starting...");
         this.displayQuestion(0);
+        document.getElementById('result').innerHTML="";
     }
 
     displayQuestion(){
         let question = document.getElementById('question');
-        question.innerHTML= 'Aufgabe: ' + model.getTask();
-        this.view.setButtons();
+        question.innerHTML= 'Aufgabe: ' + this.model.getTask();
+        this.view.setButtons(this.model.getOptions());
     }
 
     setCorrectAnswers() {
@@ -136,7 +148,6 @@ class Presenter {
 
     evaluate(answer){
         console.log("Question " + this.model.getIndex() + " has been answered.");
-        console.log("Array Length: " + this.model.getLength());
 
         if(this.model.getIndex() < this.model.getLength()) {
             console.log('Presenter -> Answer: ' + answer);
@@ -150,17 +161,14 @@ class Presenter {
             this.setCorrectAnswers();
 
             if (this.model.getIndex() === 4) {
-                this.view.endReached();
+                for(let i = 0; i<5; i++)
+                    this.view.displayTaskAnswer(this.model.getTaskAll(i), this.model.getAnswerAll(i));
                 return;
             }
             this.model.incrementIndex();
 
             this.displayQuestion();
         }
-    }
-
-    displayButtons() {
-      return model.getOptions();
     }
 }
 // ##### #####
@@ -190,11 +198,11 @@ class View {
 
     }
 
-    setButtons() {
-        allButtons[0].textContent = this.presenter.displayButtons().a;
-        allButtons[1].textContent = this.presenter.displayButtons().b;
-        allButtons[2].textContent = this.presenter.displayButtons().c;
-        allButtons[3].textContent = this.presenter.displayButtons().d;
+    setButtons(i) {
+        allButtons[0].textContent = i.a;
+        allButtons[1].textContent = i.b;
+        allButtons[2].textContent = i.c;
+        allButtons[3].textContent = i.d;
     }
 
     displayCorrectAnswers(element, text) {
@@ -225,13 +233,47 @@ class View {
         header.textContent=text;
     }
 
-    endReached() {
-        let task_container = document.getElementById('task-container');
-        task_container.style.fontSize = "medium";
-        task_container.textContent = 'Alle Fragen beantwortet, sehr gut !';
+    displayTaskAnswer(q, a) {
+        let result = document.getElementById('result');
+        let question = document.createElement("div");
+        let answer = document.createElement("div");
+
+        question.innerHTML ="Frage: " + q;
+        answer.innerHTML ="Richtige Antwort: " + a;
+
+        result.appendChild(question);
+        result.appendChild(answer);
     }
 }
 // ###### #####
+// ##### Ajax #####
+function getQuiz() {
+    let xhr = getXhr();
+    sendXhr(xhr);
+
+    function xhrHandler() {
+        console.log("Status: " +xhr.readyState);
+        if (xhr.readyState !== 4 ){
+            return;
+        }
+        console.log("Status "+ xhr.readyState + " " + xhr.status);
+        if (xhr.status === 200) {
+            console.log("Success");
+        }
+    }
+
+    function getXhr() {
+        if(window.XMLHttpRequest) {
+            return new XMLHttpRequest();
+        } else return false;
+    }
+    function sendXhr() {
+        xhr.onreadystatechange = xhrHandler;
+        xhr.open("GET", "https://irene.informatik.htw-dresden.de:8888")
+        xhr.send(null);
+        console.log("gesendet!");
+    }
+}
 
 const questionsMath = [
     {
@@ -290,10 +332,10 @@ const questionsIT = [
     {
         question: 'Welches ist kein Block-Level-Element ?',
         answers: {
-            a: 'DIV',
-            b: 'H1-H6',
-            c: 'P',
-            d: 'SPAN'
+            a: 'div',
+            b: 'h1-h1',
+            c: 'p',
+            d: 'span'
         },
         correctAnswer: 'd'
     },

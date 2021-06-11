@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.css" integrity="sha384-knaESGLxlQRSHWSJ+ZbTX6/L1bJZWBsBYGb2O+g64XHFuO7CbIj9Pkf1aaVXzIZJ" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.js" integrity="sha384-7u+OeKP8De/qfWU/3s5KUDC2wvwPe+d5GwojxjiwFJJpHAp38wQFtz3tr2QNGidv" crossorigin="anonymous"></script>
     <title>Lernen mit Ruben</title>
@@ -14,15 +14,13 @@
     </header>
 <main class="middle" id="main_content">
     <nav>
-        <form>
-            <input type="button" id="mathe" value="Mathe">
-            <input type="button" id="it" value="Internet Tech.">
-            <input type="button" id="uni" value="Allgemein">
-        </form>
+        <button id="mathe" value="Mathe">Mathe</button>
+        <button id="it" value="Internet Tech.">IT</button>
+        <button id="uni" value="Allgemein">Allgemein</button>
     </nav>
 
     <aside id="side_panel">
-        <p id="side_para" style="font-family: sans-serif;">Heute lernen wir etwas :)</p>
+        <p id="side_para" style="font-family: sans-serif;font-size: 1.2em;">Dein aktueller Fortschritt:</p>
         <p id="side_math" style="font-family: sans-serif;">Mathe: 0/5 </p>
         <p id="side_it" style="font-family: sans-serif;">IT: 0/5 </p>
         <p id = side_uni style="font-family: sans-serif;">Allgemein: 0/5 </p>
@@ -31,7 +29,7 @@
     <article id="middle_page">
         <div id="task-container">
             <div id="question" style="font-family: sans-serif;">Lass uns loslegen!</div>
-            <div id="options">
+            <div id="options" style="display: none">
                 <button id="a"></button>
                 <button id="b"></button>
                 <button id="c"></button>
@@ -44,7 +42,7 @@
 </main>
 
 <footer>
-    <p id="foot" style="font-family: sans-serif;text-align: center">Ruben-David Kraus</p>
+    <p id="foot" style="font-family: sans-serif;text-align: right">Ruben-David Kraus</p>
 </footer>
 </body>
 </html>

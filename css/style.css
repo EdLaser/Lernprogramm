@@ -14,16 +14,16 @@ main {
 }
 
 article {
-    flex: 3 3 0%;
+    flex: 1 1 0;
     order: 2;
 }
 nav {
-    flex: 0 0 0%;
+    flex: 0 0 0;
     order: 1;
 }
 
 #side_panel {
-    flex: 1 1 0%;
+    flex: 0 1 auto;
     order: 3;
 }
 
@@ -33,7 +33,6 @@ nav {
 
 article, nav, aside, footer, header {
     height: auto;
-    border: solid black;
     background-color: lightgrey;
     margin: 2px;
     padding: 1em;
@@ -46,7 +45,7 @@ article, nav, aside, footer, header {
     border-radius: 10px;
     padding: 20px 30px;
     width: auto;
-    font-size: 1vw;
+    font-size: 1em;
     margin: 10px auto;
     vertical-align:bottom;
     white-space: nowrap;
@@ -97,13 +96,54 @@ article, nav, aside, footer, header {
     margin-bottom: 15px;
 }
 
+#mathe:active, #it:active, #uni:active {
+    box-shadow: 2px 2px green;
+}
+
 #top_name {
     text-align: center;
     display: block;
     padding: 5px;
     font-size: 2em;
+    background: url("../logo--image.svg") right no-repeat, url("../cat.gif") left no-repeat;
+    background-size: 200px;
 }
 
 footer {
     display: block;
+    background: url("../programming.gif") center left no-repeat;
+    background-size: 80vw;
+}
+
+#foot {
+    display:block;
+}
+
+@media screen and (max-width: 60em){
+    main {
+        flex-direction: column;
+    }
+
+    header {
+        order:0;
+    }
+    nav {
+        height: auto;
+        order: 1;
+    }
+    article {
+        order: 2;
+    }
+    aside {
+        order: 3;
+    }
+
+    #mathe, #it, #uni {
+        position: center;
+
+        margin-bottom: 3px;
+        width: auto;
+        height: auto;
+        font-size: 1em;
+    }
 }
