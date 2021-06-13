@@ -55,7 +55,7 @@ article, nav, aside, footer, header {
 }
 
 #a, #b, #c, #d {
-    font-size: 2em;
+    font-size: 1.3em;
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -105,13 +105,13 @@ article, nav, aside, footer, header {
     display: block;
     padding: 5px;
     font-size: 2em;
-    background: url("../logo--image.svg") right no-repeat, url("../cat.gif") left no-repeat;
+    background: url("../gallery/logo--image.svg") right no-repeat, url("../gallery/cat.gif") left no-repeat;
     background-size: 200px;
 }
 
 footer {
     display: block;
-    background: url("../programming.gif") center left no-repeat;
+    background: url("../gallery/programming.gif") center left no-repeat;
     background-size: 80vw;
 }
 
@@ -137,7 +137,6 @@ footer {
     aside {
         order: 3;
     }
-
     #mathe, #it, #uni {
         position: center;
 
@@ -145,5 +144,17 @@ footer {
         width: auto;
         height: auto;
         font-size: 1em;
+    }
+    #top_name {
+        background-size: 100px;
+        font-size: 1.2em;
+    }
+
+    footer {
+        background-size: 60vw;
+    }
+
+    #foot {
+        font-size: 0.7em;
     }
 }
