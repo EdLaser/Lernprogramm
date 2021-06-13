@@ -1,9 +1,6 @@
 "use strict";
 //variables
 //model, view, presenter
-let model;
-let view;
-let presenter;
 const side_it = document.getElementById('side_it');
 const side_math = document.getElementById('side_math');
 const side_uni = document.getElementById('side_uni');
@@ -16,21 +13,40 @@ const allButtons = document.querySelectorAll('#options > *');
 const options = document.getElementById('options');
 
 //load when document is loaded
-/*document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener('DOMContentLoaded', function (){
     //initialize the variables
-    model = new Model();
-    presenter = new Presenter();
-    view = new View(presenter);
+    let model = new Model();
+    let presenter = new Presenter();
+    let view = new View(presenter);
     presenter.setModelAndView(model,view);
-    //setTimeout(presenter, 3000);
-    presenter.displayQuestion();
-}); */
 
-mathButton.addEventListener('click', function (){
+    mathButton.addEventListener('click', function (){
+        // set = questionsMath;
+        model.init(questionsMath,0 ,0);
+        presenter.start();
+        view.setHeader('Mathe');
+    });
+
+    internetButton.addEventListener('click', function (){
+        // set = questionsIT
+        model.init(questionsIT, 0, 0);
+        presenter.start();
+        view.setHeader('Internet Technologien');
+    });
+
+    uniButton.addEventListener('click', function (){
+        // set = questionsMath;
+        model.init(questionsUni,0 ,0);
+        presenter.start();
+        view.setHeader('Allgemeinwissen');
+    });
+});
+
+/*mathButton.addEventListener('click', function (){
     // set = questionsMath;
-    model = new Model(questionsMath,0 ,0);
-    presenter = new Presenter();
-    view = new View(presenter)
+    let model = new Model(questionsMath,0 ,0);
+    let presenter = new Presenter();
+    let view = new View(presenter)
     presenter.setModelAndView(model, view);
     presenter.start();
     view.setHeader('Mathe');
@@ -38,9 +54,9 @@ mathButton.addEventListener('click', function (){
 
 internetButton.addEventListener('click', function (){
     // set = questionsIT
-    model = new Model(questionsIT, 0, 0);
-    presenter = new Presenter();
-    view = new View(presenter)
+    model.init()
+    let presenter = new Presenter();
+    let view = new View(presenter)
     presenter.setModelAndView(model, view);
     presenter.start();
     view.setHeader('Internet Technologien');
@@ -48,17 +64,17 @@ internetButton.addEventListener('click', function (){
 
 uniButton.addEventListener('click', function (){
     // set = questionsMath;
-    model = new Model(questionsUni,0 ,0);
-    presenter = new Presenter();
-    view = new View(presenter)
+    let model = new Model(questionsUni,0 ,0);
+    let presenter = new Presenter();
+    let view = new View(presenter)
     presenter.setModelAndView(model, view);
     presenter.start();
     view.setHeader('Allgemeinwissen');
-});
+}); */
 
 // ##### Model #####
 class Model {
-    constructor(set, index, correct) {
+    init(set, index, correct) {
         this.questions = set;
         this.index = index;
         this.correctAnswers = correct;
@@ -104,6 +120,7 @@ class Model {
     }
 
     getIndex() {
+        console.log(this.index);
         return this.index;
     }
 
@@ -150,7 +167,6 @@ class Presenter {
         console.log("Question " + this.model.getIndex() + " has been answered.");
 
         if(this.model.getIndex() < this.model.getLength()) {
-            console.log('Presenter -> Answer: ' + answer);
             if (answer === this.model.getAnswer(this.model.getIndex())) {
                 this.model.incrementCorrect();
                 console.log(answer + ' was correct!');
@@ -224,8 +240,6 @@ class View {
     } */
 
     checkAnswer(event) {
-        //Debugging
-        console.log('View -> Evaluate: ' + event.type + " " + event.target.nodeName);
         this.presenter.evaluate(String(event.target.attributes.getNamedItem('id').value));
     }
 
@@ -238,6 +252,7 @@ class View {
         let question = document.createElement("div");
         let answer = document.createElement("div");
 
+        question.style.marginTop = "5px";
         question.innerHTML ="Frage: " + q;
         answer.innerHTML ="Richtige Antwort: " + a;
 
