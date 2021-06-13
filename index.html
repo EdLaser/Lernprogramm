@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/style_sheet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.css" integrity="sha384-knaESGLxlQRSHWSJ+ZbTX6/L1bJZWBsBYGb2O+g64XHFuO7CbIj9Pkf1aaVXzIZJ" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.js" integrity="sha384-7u+OeKP8De/qfWU/3s5KUDC2wvwPe+d5GwojxjiwFJJpHAp38wQFtz3tr2QNGidv" crossorigin="anonymous"></script>
     <title>Lernen mit Ruben</title>
+    <script src="scripts/service_worker.js"></script>
 </head>
 <body>
     <header id="top_name" style="font-family: sans-serif;">
@@ -44,5 +47,18 @@
 <footer>
     <p id="foot" style="font-family: sans-serif;text-align: right">Ruben-David Kraus</p>
 </footer>
+
+<script>
+    //Service-Worker installieren
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('scripts/service_worker.js', { scope: '/' }).then(function(reg) {
+            // Registrierung erfolgreich
+            console.log('Registrierung erfolgreich. Scope ist ' + reg.scope);
+        }).catch(function(error) {
+            // Registrierung fehlgeschlagen
+            console.log('Registrierung fehlgeschlagen mit ' + error);
+        });
+    }
+</script>
 </body>
 </html>
